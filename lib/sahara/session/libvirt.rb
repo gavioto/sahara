@@ -1,4 +1,4 @@
-require "fog"
+require "fog/libvirt"
 
 module Sahara
   module Session
@@ -18,6 +18,10 @@ module Sahara
 
         # Setup connection uri.
         uri = config.driver
+        if uri == "kvm"
+          uri = "qemu"
+        end
+
         if config.connect_via_ssh
           uri << '+ssh://'
           if config.username
